@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-import json, uuid, hashlib, time, random
+import json, uuid, hashlib, time
 
 from aiohttp import ClientSession
 from aiohttp.http import WSMsgType
@@ -10,6 +10,7 @@ import asyncio
 
 from ...typing import AsyncResult, Messages
 from ..base_provider import AsyncGeneratorProvider, format_prompt
+import secrets
 
 
 models = {
@@ -159,7 +160,7 @@ def performance() -> str:
 
 def generate_visitor_id(user_agent: str) -> str:
     f = performance()
-    r = hex(int(random.random() * (16**16)))[2:-2]
+    r = hex(int(secrets.SystemRandom().random() * (16**16)))[2:-2]
     d = xor_hash(user_agent)
     e = hex(1080 * 1920)[2:]
     return f"{f}-{r}-{d}-{e}-{f}"

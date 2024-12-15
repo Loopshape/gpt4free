@@ -1,6 +1,4 @@
 from __future__ import annotations
-
-import random
 import json
 import uuid
 import time
@@ -19,6 +17,7 @@ from ..bing.upload_image import upload_image
 from ..bing.conversation import Conversation, create_conversation, delete_conversation
 from ..needs_auth.BingCreateImages import BingCreateImages
 from ... import debug
+import secrets
 
 class Tones:
     """
@@ -98,7 +97,7 @@ def create_context(messages: Messages) -> str:
     ) + "\n\n"
 
 def get_ip_address() -> str:
-    return f"13.{random.randint(104, 107)}.{random.randint(0, 255)}.{random.randint(0, 255)}"
+    return f"13.{secrets.SystemRandom().randint(104, 107)}.{secrets.SystemRandom().randint(0, 255)}.{secrets.SystemRandom().randint(0, 255)}"
 
 def get_default_cookies():
     #muid = get_random_hex().upper()

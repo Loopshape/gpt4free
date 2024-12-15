@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import json
-import random
 from aiohttp import ClientSession, ClientError
 import asyncio
 from itertools import cycle
@@ -9,6 +8,7 @@ from itertools import cycle
 from ...typing import AsyncResult, Messages
 from ..base_provider import AsyncGeneratorProvider, ProviderModelMixin
 from ...image import ImageResponse
+import secrets
 
 class AIUncensored(AsyncGeneratorProvider, ProviderModelMixin):
     url = "https://www.aiuncensored.info/ai_uncensored"
@@ -39,7 +39,7 @@ class AIUncensored(AsyncGeneratorProvider, ProviderModelMixin):
     @staticmethod
     def generate_cipher() -> str:
         """Generate a cipher in format like '3221229284179118'"""
-        return ''.join([str(random.randint(0, 9)) for _ in range(16)])
+        return ''.join([str(secrets.SystemRandom().randint(0, 9)) for _ in range(16)])
 
     @classmethod
     def get_model(cls, model: str) -> str:

@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import json
 import base64
-import random
 import requests
 
 from ...typing import AsyncResult, Messages
@@ -12,6 +11,7 @@ from ...requests import StreamSession, raise_for_status
 from ...image import ImageResponse
 
 from .HuggingChat import HuggingChat
+import secrets
 
 class HuggingFace(AsyncGeneratorProvider, ProviderModelMixin):
     url = "https://huggingface.co"
@@ -76,7 +76,7 @@ class HuggingFace(AsyncGeneratorProvider, ProviderModelMixin):
         if model in cls.image_models:
             stream = False
             prompt = messages[-1]["content"] if prompt is None else prompt
-            payload = {"inputs": prompt, "parameters": {"seed": random.randint(0, 2**32)}}
+            payload = {"inputs": prompt, "parameters": {"seed": secrets.SystemRandom().randint(0, 2**32)}}
         else:
             params = {
                 "return_full_text": False,

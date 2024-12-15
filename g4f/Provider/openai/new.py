@@ -1,6 +1,5 @@
 import hashlib
 import base64
-import random
 import json
 import time
 import uuid
@@ -15,6 +14,7 @@ from datetime import (
 )
 
 from .har_file import RequestConfig
+import secrets
 
 cores       = [16, 24, 32]
 screens     = [3000, 4000, 6000]
@@ -377,24 +377,24 @@ def get_parse_time():
 
 def get_config(user_agent):
 
-    core   = random.choice(cores)
-    screen = random.choice(screens)
+    core   = secrets.choice(cores)
+    screen = secrets.choice(screens)
     
     # partially hardcoded config
     config = [
         core + screen,
         get_parse_time(),
         None,
-        random.random(),
+        secrets.SystemRandom().random(),
         user_agent,
         None,
         RequestConfig.data_build, #document.documentElement.getAttribute("data-build"),
         "en-US",
         "en-US,es-US,en,es",
         0,
-        random.choice(navigator_keys),
+        secrets.choice(navigator_keys),
         'location',
-        random.choice(window_keys),
+        secrets.choice(window_keys),
         time.perf_counter(),
         str(uuid.uuid4()),
         "",
@@ -443,7 +443,7 @@ def generate_answer(seed, diff, config):
     return 'wQ8Lk5FbGpA2NcR9dShT6gYjU7VxZ4D' + base64.b64encode(f'"{seed}"'.encode()).decode(), False
 
 def get_requirements_token(config):
-    require, solved = generate_answer(format(random.random()), "0fffff", config)
+    require, solved = generate_answer(format(secrets.SystemRandom().random()), "0fffff", config)
 
     if solved:
         return 'gAAAAAC' + require
@@ -605,7 +605,7 @@ def get_func_map() -> FloatMap:
             if tv == "window.performance.now":
                 current_time = time.time_ns()
                 elapsed_ns = current_time - int(start_time * 1e9)
-                res = (elapsed_ns + random.random()) / 1e6
+                res = (elapsed_ns + secrets.SystemRandom().random()) / 1e6
             elif tv == "window.Object.create":
                 res = OrderedMap()
             elif tv == "window.Object.keys":
@@ -620,7 +620,7 @@ def get_func_map() -> FloatMap:
                         "UiState.isNavigationCollapsed.1",
                     ]
             elif tv == "window.Math.random":
-                res = random.random()
+                res = secrets.SystemRandom().random()
         elif callable(tv):
             res = tv(*i)
         process_map[e] = res

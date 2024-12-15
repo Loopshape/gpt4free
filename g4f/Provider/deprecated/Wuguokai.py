@@ -1,11 +1,10 @@
 from __future__ import annotations
 
-import random
-
 import requests
 
 from ...typing import Any, CreateResult
 from ..base_provider import AbstractProvider, format_prompt
+import secrets
 
 
 class Wuguokai(AbstractProvider):
@@ -38,7 +37,7 @@ class Wuguokai(AbstractProvider):
         data ={
             "prompt": format_prompt(messages),
             "options": {},
-            "userId": f"#/chat/{random.randint(1,99999999)}",
+            "userId": f"#/chat/{secrets.SystemRandom().randint(1,99999999)}",
             "usingContext": True
         }
         response = requests.post(

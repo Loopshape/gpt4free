@@ -1,12 +1,12 @@
 from __future__ import annotations
 
 import asyncio
-import random
 
 from ..typing import Type, List, CreateResult, Messages, AsyncResult
 from .types import BaseProvider, BaseRetryProvider, ProviderType
 from .. import debug
 from ..errors import RetryProviderError, RetryNoProviderError
+import secrets
 
 DEFAULT_TIMEOUT = 60
 
@@ -149,7 +149,7 @@ class IterListProvider(BaseRetryProvider):
     def get_providers(self, stream: bool, ignored: list[str]) -> list[ProviderType]:
         providers = [p for p in self.providers if (p.supports_stream or not stream) and p.__name__ not in ignored]
         if self.shuffle:
-            random.shuffle(providers)
+            secrets.SystemRandom().shuffle(providers)
         return providers
 
 class RetryProvider(IterListProvider):

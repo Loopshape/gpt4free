@@ -1,5 +1,4 @@
 import json
-import random
 import re
 import requests
 from aiohttp import ClientSession
@@ -12,6 +11,7 @@ from ..requests.raise_for_status import raise_for_status
 from .base_provider import AsyncGeneratorProvider, ProviderModelMixin
 
 from .. import debug
+import secrets
 
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
  
@@ -262,7 +262,7 @@ class Airforce(AsyncGeneratorProvider, ProviderModelMixin):
             if prompt is None:
                 prompt = messages[-1]['content']
             if seed is None:
-                seed = random.randint(0, 10000)
+                seed = secrets.SystemRandom().randint(0, 10000)
             async for result in cls.generate_image(model, prompt, api_key, size, seed, proxy):
                 yield result
         else:

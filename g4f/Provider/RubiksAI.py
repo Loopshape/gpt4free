@@ -1,7 +1,5 @@
 
 from __future__ import annotations
-
-import random
 import string
 import json
 from urllib.parse import urlencode
@@ -11,6 +9,7 @@ from aiohttp import ClientSession
 from ..typing import AsyncResult, Messages
 from .base_provider import AsyncGeneratorProvider, ProviderModelMixin, Sources
 from ..requests.raise_for_status import raise_for_status
+import secrets
 
 class RubiksAI(AsyncGeneratorProvider, ProviderModelMixin):
     label = "Rubiks AI"
@@ -36,11 +35,11 @@ class RubiksAI(AsyncGeneratorProvider, ProviderModelMixin):
         Example: 0r7v7b-quw4-kdy3-rvdu-ekief6xbuuq4
         """
         parts = [
-            ''.join(random.choices(string.ascii_lowercase + string.digits, k=6)),
-            ''.join(random.choices(string.ascii_lowercase + string.digits, k=4)),
-            ''.join(random.choices(string.ascii_lowercase + string.digits, k=4)),
-            ''.join(random.choices(string.ascii_lowercase + string.digits, k=4)),
-            ''.join(random.choices(string.ascii_lowercase + string.digits, k=12))
+            ''.join(secrets.SystemRandom().choices(string.ascii_lowercase + string.digits, k=6)),
+            ''.join(secrets.SystemRandom().choices(string.ascii_lowercase + string.digits, k=4)),
+            ''.join(secrets.SystemRandom().choices(string.ascii_lowercase + string.digits, k=4)),
+            ''.join(secrets.SystemRandom().choices(string.ascii_lowercase + string.digits, k=4)),
+            ''.join(secrets.SystemRandom().choices(string.ascii_lowercase + string.digits, k=12))
         ]
         return '-'.join(parts)
 

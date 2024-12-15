@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 from urllib.parse import quote
-import random
 import requests
 from aiohttp import ClientSession
 
@@ -11,6 +10,7 @@ from ..requests.raise_for_status import raise_for_status
 from ..requests.aiohttp import get_connector
 from .needs_auth.OpenaiAPI import OpenaiAPI
 from .helper import format_prompt
+import secrets
 
 class PollinationsAI(OpenaiAPI):
     label = "Pollinations AI"
@@ -89,7 +89,7 @@ class PollinationsAI(OpenaiAPI):
         if prompt is None:
             prompt = messages[-1]["content"]
         if seed is None:
-            seed = random.randint(0, 100000)
+            seed = secrets.SystemRandom().randint(0, 100000)
         image = f"https://image.pollinations.ai/prompt/{quote(prompt)}?width={width}&height={height}&seed={int(seed)}&nofeed=true&nologo=true&model={quote(model)}"
         yield ImageResponse(image, prompt)
 

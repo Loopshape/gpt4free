@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 from aiohttp import ClientSession
-import random
 import string
 import json
 import re
@@ -15,6 +14,7 @@ from .base_provider import AsyncGeneratorProvider, ProviderModelMixin
 from ..image import ImageResponse, to_data_uri
 from ..cookies import get_cookies_dir
 from .helper import format_prompt
+import secrets
 
 class Blackbox(AsyncGeneratorProvider, ProviderModelMixin):
     label = "Blackbox AI"
@@ -186,7 +186,7 @@ class Blackbox(AsyncGeneratorProvider, ProviderModelMixin):
     @staticmethod
     def generate_id(length=7):
         characters = string.ascii_letters + string.digits
-        return ''.join(random.choice(characters) for _ in range(length))
+        return ''.join(secrets.choice(characters) for _ in range(length))
 
     @classmethod
     def add_prefix_to_messages(cls, messages: Messages, model: str) -> Messages:

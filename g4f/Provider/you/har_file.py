@@ -3,13 +3,13 @@ from __future__ import annotations
 import json
 import os
 import os.path
-import random
 import logging
 
 from ...requests import StreamSession, raise_for_status
 from ...cookies import get_cookies_dir
 from ...errors import MissingRequirementsError, NoValidHarFileError
 from ... import debug
+import secrets
 
 logger = logging.getLogger(__name__)
 
@@ -71,7 +71,7 @@ async def create_telemetry_id(proxy: str = None):
     global chatArks
     if chatArks is None:
         chatArks = readHAR()
-    return await sendRequest(random.choice(chatArks), proxy)
+    return await sendRequest(secrets.choice(chatArks), proxy)
 
 async def get_telemetry_ids(proxy: str = None) -> list:
     try:

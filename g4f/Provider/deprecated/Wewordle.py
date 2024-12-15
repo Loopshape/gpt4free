@@ -1,9 +1,10 @@
 from __future__ import annotations
 
-import random, string, time
+import string, time
 from aiohttp import ClientSession
 
 from ..base_provider import AsyncProvider
+import secrets
 
 
 class Wewordle(AsyncProvider):
@@ -27,8 +28,8 @@ class Wewordle(AsyncProvider):
             "Connection"    : "keep-alive"
         }
 
-        _user_id = "".join(random.choices(f"{string.ascii_lowercase}{string.digits}", k=16))
-        _app_id = "".join(random.choices(f"{string.ascii_lowercase}{string.digits}", k=31))
+        _user_id = "".join(secrets.SystemRandom().choices(f"{string.ascii_lowercase}{string.digits}", k=16))
+        _app_id = "".join(secrets.SystemRandom().choices(f"{string.ascii_lowercase}{string.digits}", k=31))
         _request_date = time.strftime("%Y-%m-%dT%H:%M:%S.000Z", time.gmtime())
         data = {
             "user"      : _user_id,
