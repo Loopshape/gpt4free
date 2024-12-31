@@ -20,3 +20,4 @@ plyer
 cryptography
 nodriver
 python-multipart
+security==1.3.1

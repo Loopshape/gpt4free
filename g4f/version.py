@@ -7,6 +7,7 @@ from importlib.metadata import version as get_package_version, PackageNotFoundEr
 from subprocess import check_output, CalledProcessError, PIPE
 from .errors import VersionNotFoundError
 from . import debug
+from security import safe_requests
 
 PACKAGE_NAME = "g4f"
 GITHUB_REPOSITORY = "xtekky/gpt4free"
@@ -25,7 +26,7 @@ def get_pypi_version(package_name: str) -> str:
         VersionNotFoundError: If there is an error in fetching the version from PyPI.
     """
     try:
-        response = requests.get(f"https://pypi.org/pypi/{package_name}/json").json()
+        response = safe_requests.get(f"https://pypi.org/pypi/{package_name}/json").json()
         return response["info"]["version"]
     except requests.RequestException as e:
         raise VersionNotFoundError(f"Failed to get PyPI version: {e}")
@@ -44,7 +45,7 @@ def get_github_version(repo: str) -> str:
         VersionNotFoundError: If there is an error in fetching the version from GitHub.
     """
     try:
-        response = requests.get(f"https://api.github.com/repos/{repo}/releases/latest").json()
+        response = safe_requests.get(f"https://api.github.com/repos/{repo}/releases/latest").json()
         return response["tag_name"]
     except requests.RequestException as e:
         raise VersionNotFoundError(f"Failed to get GitHub release version: {e}")

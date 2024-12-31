@@ -5,6 +5,7 @@ from ...typing       import CreateResult, Messages, ImageType
 from ..base_provider import AbstractProvider
 from ...cookies      import get_cookies
 from ...image        import to_bytes
+from security import safe_requests
 
 class Reka(AbstractProvider):
     url             = "https://chat.reka.ai/"
@@ -139,7 +140,7 @@ class Reka(AbstractProvider):
         }
 
         try:
-            response = requests.get('https://chat.reka.ai/bff/auth/access_token', 
+            response = safe_requests.get('https://chat.reka.ai/bff/auth/access_token', 
                                     cookies=cls.cookies, headers=headers, proxies=cls.proxy)
 
             return response.json()['accessToken']

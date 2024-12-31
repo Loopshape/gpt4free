@@ -1,5 +1,6 @@
 import sys
 from pathlib import Path
+from security import safe_requests
 
 sys.path.append(str(Path(__file__).parent.parent.parent))
 
@@ -7,7 +8,6 @@ import g4f
 import json
 import os
 import re
-import requests
 from typing import Union
 from github import Github
 from github.PullRequest import PullRequest
@@ -50,7 +50,7 @@ def get_diff(diff_url: str) -> str:
     Returns:
         str: The diff of the pull request.
     """
-    response = requests.get(diff_url)
+    response = safe_requests.get(diff_url)
     response.raise_for_status()
     return response.text
 

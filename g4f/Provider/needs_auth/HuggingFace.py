@@ -3,7 +3,6 @@ from __future__ import annotations
 import json
 import base64
 import random
-import requests
 
 from ...typing import AsyncResult, Messages
 from ..base_provider import AsyncGeneratorProvider, ProviderModelMixin, format_prompt
@@ -12,6 +11,7 @@ from ...requests import StreamSession, raise_for_status
 from ...image import ImageResponse
 
 from .HuggingChat import HuggingChat
+from security import safe_requests
 
 class HuggingFace(AsyncGeneratorProvider, ProviderModelMixin):
     url = "https://huggingface.co"
@@ -25,13 +25,13 @@ class HuggingFace(AsyncGeneratorProvider, ProviderModelMixin):
     def get_models(cls) -> list[str]:
         if not cls.models:
             url = "https://huggingface.co/api/models?inference=warm&pipeline_tag=text-generation"
-            cls.models = [model["id"] for model in requests.get(url).json()]
+            cls.models = [model["id"] for model in safe_requests.get(url).json()]
             cls.models.append("meta-llama/Llama-3.2-11B-Vision-Instruct")
             cls.models.append("nvidia/Llama-3.1-Nemotron-70B-Instruct-HF")
             cls.models.sort()
         if not cls.image_models:
             url = "https://huggingface.co/api/models?pipeline_tag=text-to-image"
-            cls.image_models = [model["id"] for model in requests.get(url).json() if model["trendingScore"] >= 20]
+            cls.image_models = [model["id"] for model in safe_requests.get(url).json() if model["trendingScore"] >= 20]
             cls.image_models.sort()
             cls.models.extend(cls.image_models)
         return cls.models

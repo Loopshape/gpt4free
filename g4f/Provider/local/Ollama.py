@@ -1,10 +1,9 @@
 from __future__ import annotations
-
-import requests
 import os
 
 from ..needs_auth.OpenaiAPI import OpenaiAPI
 from ...typing import AsyncResult, Messages
+from security import safe_requests
 
 class Ollama(OpenaiAPI):
     label = "Ollama"
@@ -18,7 +17,7 @@ class Ollama(OpenaiAPI):
             host = os.getenv("OLLAMA_HOST", "127.0.0.1")
             port = os.getenv("OLLAMA_PORT", "11434")
             url = f"http://{host}:{port}/api/tags"
-            models = requests.get(url).json()["models"]
+            models = safe_requests.get(url).json()["models"]
             cls.models = [model["name"] for model in models]
             cls.default_model = cls.models[0]
         return cls.models
