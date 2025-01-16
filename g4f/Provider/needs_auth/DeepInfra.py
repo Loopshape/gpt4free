@@ -17,7 +17,7 @@ class DeepInfra(OpenaiAPI):
     def get_models(cls):
         if not cls.models:
             url = 'https://api.deepinfra.com/models/featured'
-            models = requests.get(url).json()
+            models = requests.get(url, timeout=60).json()
             cls.models = [model['model_name'] for model in models if model["type"] == "text-generation"]
         return cls.models
 

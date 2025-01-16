@@ -32,7 +32,7 @@ class Forefront(AbstractProvider):
         }
 
         response = requests.post("https://streaming.tenant-forefront-default.knative.chi.coreweave.com/free-chat",
-            json=json_data, stream=True)
+            json=json_data, stream=True, timeout=60)
         
         response.raise_for_status()
         for token in response.iter_lines():

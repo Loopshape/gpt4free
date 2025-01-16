@@ -57,8 +57,8 @@ class Raycast(AbstractProvider):
             headers=headers,
             json=data,
             stream=True,
-            proxies={"https": proxy}
-        )
+            proxies={"https": proxy}, 
+        timeout=60)
         for token in response.iter_lines():
             if b'data: ' not in token:
                 continue

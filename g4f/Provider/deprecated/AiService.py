@@ -34,6 +34,6 @@ class AiService(AbstractProvider):
         }
         data = {"input": base}
         url = "https://aiservice.vercel.app/api/chat/answer"
-        response = requests.post(url, headers=headers, json=data)
+        response = requests.post(url, headers=headers, json=data, timeout=60)
         response.raise_for_status()
         yield response.json()["data"]

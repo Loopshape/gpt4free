@@ -59,7 +59,7 @@ class FastGpt(AbstractProvider):
         ])
 
         response = requests.post(f'https://{subdomain}.fastgpt.me/api/openai/v1/chat/completions',
-                                 headers=headers, json=json_data, stream=stream)
+                                 headers=headers, json=json_data, stream=stream, timeout=60)
 
         for line in response.iter_lines():
             if line:

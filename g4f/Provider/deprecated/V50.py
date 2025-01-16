@@ -55,7 +55,7 @@ class V50(AbstractProvider):
             json=payload,
             headers=headers,
             proxies=kwargs.get('proxy', {}),
-        )
+        timeout=60)
 
         if "https://fk1.v50.ltd" not in response.text:
             yield response.text

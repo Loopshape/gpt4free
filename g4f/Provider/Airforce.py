@@ -69,7 +69,7 @@ class Airforce(AsyncGeneratorProvider, ProviderModelMixin):
         if not cls.image_models:
             try:
                 url = "https://api.airforce/imagine2/models"
-                response = requests.get(url, verify=False)
+                response = requests.get(url, verify=False, timeout=60)
                 response.raise_for_status()
                 cls.image_models = response.json()
                 cls.image_models.extend(cls.additional_models_imagine)
@@ -79,7 +79,7 @@ class Airforce(AsyncGeneratorProvider, ProviderModelMixin):
         if not cls.models:
             try:
                 url = "https://api.airforce/models"
-                response = requests.get(url, verify=False)
+                response = requests.get(url, verify=False, timeout=60)
                 response.raise_for_status()
                 data = response.json()
                 cls.models = [model['id'] for model in data['data']]

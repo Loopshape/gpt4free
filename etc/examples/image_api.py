@@ -5,5 +5,5 @@ body = {
     "prompt": "hello world user",
     #"response_format": "b64_json",
 }
-data = requests.post(url, json=body, stream=True).json()
+data = requests.post(url, json=body, stream=True, timeout=60).json()
 print(data)

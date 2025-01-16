@@ -107,7 +107,7 @@ class OpenaiChat(AsyncGeneratorProvider, ProviderModelMixin):
     def get_models(cls):
         if not cls.models:
             try:
-                response = requests.get(f"{cls.url}/backend-anon/models")
+                response = requests.get(f"{cls.url}/backend-anon/models", timeout=60)
                 response.raise_for_status()
                 data = response.json()
                 cls.models = [model.get("slug") for model in data.get("models")]

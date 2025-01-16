@@ -50,7 +50,7 @@ def get_diff(diff_url: str) -> str:
     Returns:
         str: The diff of the pull request.
     """
-    response = requests.get(diff_url)
+    response = requests.get(diff_url, timeout=60)
     response.raise_for_status()
     return response.text
 

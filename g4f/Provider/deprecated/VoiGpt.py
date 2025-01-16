@@ -59,7 +59,7 @@ class VoiGpt(AbstractProvider):
                 "upgrade-insecure-requests": "1",
                 "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36",
             }
-            req_response = requests.get(cls.url, headers=headers)
+            req_response = requests.get(cls.url, headers=headers, timeout=60)
             access_token = cls._access_token = req_response.cookies.get("csrftoken")
 
         headers = {
@@ -82,7 +82,7 @@ class VoiGpt(AbstractProvider):
             "messages": messages,
         }
         request_url = f"{cls.url}/generate_response/"
-        req_response = requests.post(request_url, headers=headers, json=payload)
+        req_response = requests.post(request_url, headers=headers, json=payload, timeout=60)
         try:
             response = json.loads(req_response.text)
             yield response["response"]

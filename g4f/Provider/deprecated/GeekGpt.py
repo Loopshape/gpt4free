@@ -54,7 +54,7 @@ class GeekGpt(AbstractProvider):
         }
 
         response = requests.post("https://ai.fakeopen.com/v1/chat/completions", 
-                                 headers=headers, data=data, stream=True)
+                                 headers=headers, data=data, stream=True, timeout=60)
         response.raise_for_status()
 
         for chunk in response.iter_lines():
