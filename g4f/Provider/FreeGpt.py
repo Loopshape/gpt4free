@@ -2,12 +2,12 @@ from __future__ import annotations
 
 import time
 import hashlib
-import random
 from typing import AsyncGenerator, Optional, Dict, Any
 from ..typing import Messages
 from ..requests import StreamSession, raise_for_status
 from .base_provider import AsyncGeneratorProvider, ProviderModelMixin
 from ..errors import RateLimitError
+import secrets
 
 # Constants
 DOMAINS = [
@@ -41,7 +41,7 @@ class FreeGpt(AsyncGeneratorProvider, ProviderModelMixin):
         timestamp = int(time.time())
         data = cls._build_request_data(messages, prompt, timestamp)
 
-        domain = random.choice(DOMAINS)
+        domain = secrets.choice(DOMAINS)
 
         async with StreamSession(
             impersonate="chrome",

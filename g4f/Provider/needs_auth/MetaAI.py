@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import json
 import uuid
-import random
 import time
 from typing import Dict, List
 
@@ -14,6 +13,7 @@ from ...image import ImageResponse, ImagePreview
 from ...errors import ResponseError
 from ..base_provider import AsyncGeneratorProvider, ProviderModelMixin
 from ..helper import format_prompt, get_connector, format_cookies
+import secrets
 
 class Sources():
     def __init__(self, link_list: List[Dict[str, str]]) -> None:
@@ -228,7 +228,7 @@ def generate_offline_threading_id() -> str:
         str: The generated offline threading ID.
     """
     # Generate a random 64-bit integer
-    random_value = random.getrandbits(64)
+    random_value = secrets.SystemRandom().getrandbits(64)
     
     # Get the current timestamp in milliseconds
     timestamp = int(time.time() * 1000)

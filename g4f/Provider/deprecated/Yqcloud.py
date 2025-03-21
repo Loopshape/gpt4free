@@ -1,10 +1,9 @@
 from __future__ import annotations
-
-import random
 from ...requests import StreamSession
 
 from ...typing import AsyncResult, Messages
 from ..base_provider import AsyncGeneratorProvider, format_prompt
+import secrets
 
 
 class Yqcloud(AsyncGeneratorProvider):
@@ -50,7 +49,7 @@ def _create_payload(
     **kwargs
 ):
     if not user_id:
-        user_id = random.randint(1690000544336, 2093025544336)
+        user_id = secrets.SystemRandom().randint(1690000544336, 2093025544336)
     return {
         "prompt": format_prompt(messages),
         "network": True,

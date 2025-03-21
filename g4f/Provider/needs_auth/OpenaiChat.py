@@ -7,8 +7,8 @@ import json
 import base64
 import time
 import requests
-import random
 from copy import copy
+import secrets
 
 try:
     import nodriver
@@ -396,7 +396,7 @@ class OpenaiChat(AsyncGeneratorProvider, ProviderModelMixin):
                     "system_hints": ["search"] if web_search else None,
                     "supported_encodings":["v1"],
                     "conversation_origin":None,
-                    "client_contextual_info":{"is_dark_mode":False,"time_since_loaded":random.randint(20, 500),"page_height":578,"page_width":1850,"pixel_ratio":1,"screen_height":1080,"screen_width":1920},
+                    "client_contextual_info":{"is_dark_mode":False,"time_since_loaded":secrets.SystemRandom().randint(20, 500),"page_height":578,"page_width":1850,"pixel_ratio":1,"screen_height":1080,"screen_width":1920},
                     "paragen_stream_type_override":None,
                     "paragen_cot_summary_display_override":"allow",
                     "supports_buffering":True

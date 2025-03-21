@@ -3,12 +3,12 @@ from __future__ import annotations
 from aiohttp import ClientSession
 import hashlib
 import time
-import random
 import re
 import json
 from ...typing import AsyncResult, Messages
 from ..base_provider import AsyncGeneratorProvider, ProviderModelMixin
 from ..helper import format_prompt
+import secrets
 
 class MagickPen(AsyncGeneratorProvider, ProviderModelMixin):
     url = "https://magickpen.com"
@@ -33,7 +33,7 @@ class MagickPen(AsyncGeneratorProvider, ProviderModelMixin):
         X_API_SECRET = match.group(1) if match else None
 
         timestamp = str(int(time.time() * 1000))
-        nonce = str(random.random())
+        nonce = str(secrets.SystemRandom().random())
 
         s = ["TGDBU9zCgM", timestamp, nonce]
         s.sort()

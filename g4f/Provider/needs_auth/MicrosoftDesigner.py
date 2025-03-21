@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import uuid
 import aiohttp
-import random
 import asyncio
 import json
 
@@ -16,6 +15,7 @@ from ..Copilot import get_headers, get_har_files
 from ..base_provider import AsyncGeneratorProvider, ProviderModelMixin
 from ..helper import get_random_hex
 from ... import debug
+import secrets
 
 class MicrosoftDesigner(AsyncGeneratorProvider, ProviderModelMixin):
     label = "Microsoft Designer"
@@ -56,7 +56,7 @@ class MicrosoftDesigner(AsyncGeneratorProvider, ProviderModelMixin):
 async def create_images(prompt: str, access_token: str, user_agent: str, image_size: str, proxy: str = None, seed: int = None):
     url = 'https://designerapp.officeapps.live.com/designerapp/DallE.ashx?action=GetDallEImagesCogSci'
     if seed is None:
-        seed = random.randint(0, 10000)
+        seed = secrets.SystemRandom().randint(0, 10000)
 
     headers = {
         "User-Agent": user_agent,
