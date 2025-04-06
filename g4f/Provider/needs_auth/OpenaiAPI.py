@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import json
-import requests
 
 from ..helper import filter_none
 from ..base_provider import AsyncGeneratorProvider, ProviderModelMixin, FinishReason
@@ -10,6 +9,7 @@ from ...requests import StreamSession, raise_for_status
 from ...errors import MissingAuthError, ResponseError
 from ...image import to_data_uri
 from ... import debug
+from security import safe_requests
 
 class OpenaiAPI(AsyncGeneratorProvider, ProviderModelMixin):
     label = "OpenAI API"
@@ -29,7 +29,7 @@ class OpenaiAPI(AsyncGeneratorProvider, ProviderModelMixin):
                 headers = {}
                 if api_key is not None:
                     headers["authorization"] = f"Bearer {api_key}"
-                response = requests.get(f"{cls.api_base}/models", headers=headers)
+                response = safe_requests.get(f"{cls.api_base}/models", headers=headers)
                 raise_for_status(response)
                 data = response.json()
                 cls.models = [model.get("id") for model in data.get("data")]

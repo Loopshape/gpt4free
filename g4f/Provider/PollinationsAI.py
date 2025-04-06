@@ -2,7 +2,6 @@ from __future__ import annotations
 
 from urllib.parse import quote
 import random
-import requests
 from aiohttp import ClientSession
 
 from ..typing import AsyncResult, Messages
@@ -11,6 +10,7 @@ from ..requests.raise_for_status import raise_for_status
 from ..requests.aiohttp import get_connector
 from .needs_auth.OpenaiAPI import OpenaiAPI
 from .helper import format_prompt
+from security import safe_requests
 
 class PollinationsAI(OpenaiAPI):
     label = "Pollinations AI"
@@ -45,7 +45,7 @@ class PollinationsAI(OpenaiAPI):
             cls.image_models = []
         if not cls.image_models:
             url = "https://image.pollinations.ai/models"
-            response = requests.get(url, headers=cls.headers)
+            response = safe_requests.get(url, headers=cls.headers)
             raise_for_status(response)
             cls.image_models = response.json()
             cls.image_models.extend(cls.additional_models_image)
@@ -53,7 +53,7 @@ class PollinationsAI(OpenaiAPI):
             cls.models = []
         if not cls.models:
             url = "https://text.pollinations.ai/models"
-            response = requests.get(url, headers=cls.headers)
+            response = safe_requests.get(url, headers=cls.headers)
             raise_for_status(response)
             cls.models = [model.get("name") for model in response.json()]
             cls.models.extend(cls.image_models)

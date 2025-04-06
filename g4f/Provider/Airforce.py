@@ -12,6 +12,7 @@ from ..requests.raise_for_status import raise_for_status
 from .base_provider import AsyncGeneratorProvider, ProviderModelMixin
 
 from .. import debug
+from security import safe_requests
 
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
  
@@ -69,7 +70,7 @@ class Airforce(AsyncGeneratorProvider, ProviderModelMixin):
         if not cls.image_models:
             try:
                 url = "https://api.airforce/imagine2/models"
-                response = requests.get(url, verify=False)
+                response = safe_requests.get(url, verify=False)
                 response.raise_for_status()
                 cls.image_models = response.json()
                 cls.image_models.extend(cls.additional_models_imagine)
@@ -79,7 +80,7 @@ class Airforce(AsyncGeneratorProvider, ProviderModelMixin):
         if not cls.models:
             try:
                 url = "https://api.airforce/models"
-                response = requests.get(url, verify=False)
+                response = safe_requests.get(url, verify=False)
                 response.raise_for_status()
                 data = response.json()
                 cls.models = [model['id'] for model in data['data']]

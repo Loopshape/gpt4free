@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json, base64, requests, random, uuid
+from security import safe_requests
 
 try:
     import execjs
@@ -93,7 +94,7 @@ def get_anti_bot_token() -> str:
         'user-agent': f'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.{random.randint(99, 999)}.{random.randint(99, 999)} Safari/537.36',
     }
 
-    response = requests.get('https://sdk.vercel.ai/openai.jpeg', 
+    response = safe_requests.get('https://sdk.vercel.ai/openai.jpeg', 
                             headers=headers).text
 
     raw_data = json.loads(base64.b64decode(response, 
