@@ -45,7 +45,7 @@ class PollinationsAI(OpenaiAPI):
             cls.image_models = []
         if not cls.image_models:
             url = "https://image.pollinations.ai/models"
-            response = requests.get(url, headers=cls.headers)
+            response = requests.get(url, headers=cls.headers, timeout=60)
             raise_for_status(response)
             cls.image_models = response.json()
             cls.image_models.extend(cls.additional_models_image)
@@ -53,7 +53,7 @@ class PollinationsAI(OpenaiAPI):
             cls.models = []
         if not cls.models:
             url = "https://text.pollinations.ai/models"
-            response = requests.get(url, headers=cls.headers)
+            response = requests.get(url, headers=cls.headers, timeout=60)
             raise_for_status(response)
             cls.models = [model.get("name") for model in response.json()]
             cls.models.extend(cls.image_models)

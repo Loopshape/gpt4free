@@ -29,7 +29,7 @@ class OpenaiAPI(AsyncGeneratorProvider, ProviderModelMixin):
                 headers = {}
                 if api_key is not None:
                     headers["authorization"] = f"Bearer {api_key}"
-                response = requests.get(f"{cls.api_base}/models", headers=headers)
+                response = requests.get(f"{cls.api_base}/models", headers=headers, timeout=60)
                 raise_for_status(response)
                 data = response.json()
                 cls.models = [model.get("id") for model in data.get("data")]

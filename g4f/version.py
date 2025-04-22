@@ -25,7 +25,7 @@ def get_pypi_version(package_name: str) -> str:
         VersionNotFoundError: If there is an error in fetching the version from PyPI.
     """
     try:
-        response = requests.get(f"https://pypi.org/pypi/{package_name}/json").json()
+        response = requests.get(f"https://pypi.org/pypi/{package_name}/json", timeout=60).json()
         return response["info"]["version"]
     except requests.RequestException as e:
         raise VersionNotFoundError(f"Failed to get PyPI version: {e}")
@@ -44,7 +44,7 @@ def get_github_version(repo: str) -> str:
         VersionNotFoundError: If there is an error in fetching the version from GitHub.
     """
     try:
-        response = requests.get(f"https://api.github.com/repos/{repo}/releases/latest").json()
+        response = requests.get(f"https://api.github.com/repos/{repo}/releases/latest", timeout=60).json()
         return response["tag_name"]
     except requests.RequestException as e:
         raise VersionNotFoundError(f"Failed to get GitHub release version: {e}")

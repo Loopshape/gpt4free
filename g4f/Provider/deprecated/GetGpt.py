@@ -47,7 +47,7 @@ class GetGpt(AbstractProvider):
         )
 
         res = requests.post('https://chat.getgpt.world/api/chat/stream',
-            headers=headers, json={'signature': _encrypt(data)}, stream=True)
+            headers=headers, json={'signature': _encrypt(data)}, stream=True, timeout=60)
 
         res.raise_for_status()
         for line in res.iter_lines():

@@ -66,7 +66,7 @@ class Vercel(AbstractProvider):
         max_retries  = kwargs.get('max_retries', 20)
         for _ in range(max_retries):
             response = requests.post('https://chat.vercel.ai/api/chat', 
-                                    headers=headers, json=json_data, stream=True, proxies={"https": proxy})
+                                    headers=headers, json=json_data, stream=True, proxies={"https": proxy}, timeout=60)
             try:
                 response.raise_for_status()
             except:
@@ -94,7 +94,7 @@ def get_anti_bot_token() -> str:
     }
 
     response = requests.get('https://sdk.vercel.ai/openai.jpeg', 
-                            headers=headers).text
+                            headers=headers, timeout=60).text
 
     raw_data = json.loads(base64.b64decode(response, 
                                     validate=True))
