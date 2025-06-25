@@ -1,9 +1,8 @@
 from __future__ import annotations
-
-import random
 import string
 
 from ..typing import Messages, Cookies
+import secrets
 
 def format_prompt(messages: Messages, add_special_tokens=False) -> str:
     """
@@ -35,7 +34,7 @@ def get_random_string(length: int = 10) -> str:
         str: A random string of the specified length.
     """
     return ''.join(
-        random.choice(string.ascii_lowercase + string.digits)
+        secrets.choice(string.ascii_lowercase + string.digits)
         for _ in range(length)
     )
 
@@ -47,7 +46,7 @@ def get_random_hex(length: int = 32) -> str:
         str: A random hexadecimal string of n characters.
     """
     return ''.join(
-        random.choice("abcdef" + string.digits)
+        secrets.choice("abcdef" + string.digits)
         for _ in range(length)
     )
 

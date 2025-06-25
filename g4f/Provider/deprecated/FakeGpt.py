@@ -1,11 +1,12 @@
 from __future__ import annotations
 
-import uuid, time, random, json
+import uuid, time, json
 from aiohttp import ClientSession
 
 from ...typing import AsyncResult, Messages
 from ..base_provider import AsyncGeneratorProvider
 from ..helper import format_prompt, get_random_string
+import secrets
 
 
 class FakeGpt(AsyncGeneratorProvider):
@@ -38,7 +39,7 @@ class FakeGpt(AsyncGeneratorProvider):
                     list = (await response.json())["loads"]
                     token_ids = [t["token_id"] for t in list]
                 data = {
-                    "token_key": random.choice(token_ids),
+                    "token_key": secrets.choice(token_ids),
                     "session_password": get_random_string()
                 }
                 async with session.post(f"{cls.url}/auth/login", data=data, proxy=proxy) as response:

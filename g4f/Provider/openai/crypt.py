@@ -3,8 +3,8 @@ from __future__ import annotations
 import json
 import base64
 import hashlib
-import random
 from Crypto.Cipher import AES
+import secrets
 
 def pad(data: str) -> bytes:
     # Convert the string to bytes and calculate the number of bytes to pad
@@ -19,7 +19,7 @@ def encrypt(data, key):
     dx = bytes()
 
     # Generate salt, as 8 random lowercase letters
-    salt = "".join(random.choice("abcdefghijklmnopqrstuvwxyz") for _ in range(8))
+    salt = "".join(secrets.choice("abcdefghijklmnopqrstuvwxyz") for _ in range(8))
 
     # Our final key and IV come from the key and salt being repeatedly hashed
     for x in range(3):

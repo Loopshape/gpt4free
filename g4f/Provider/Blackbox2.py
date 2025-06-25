@@ -1,6 +1,4 @@
 from __future__ import annotations
-
-import random
 import asyncio
 import re
 import json
@@ -14,6 +12,7 @@ from .base_provider import AsyncGeneratorProvider, ProviderModelMixin
 from ..cookies import get_cookies_dir
 
 from .. import debug
+import secrets
 
 class Blackbox2(AsyncGeneratorProvider, ProviderModelMixin):
     url = "https://www.blackbox.ai"
@@ -152,7 +151,7 @@ class Blackbox2(AsyncGeneratorProvider, ProviderModelMixin):
                     if attempt == max_retries - 1:
                         raise RuntimeError(f"Error after {max_retries} attempts: {str(e)}")
                     else:
-                        wait_time = delay * (2 ** attempt) + random.uniform(0, 1)
+                        wait_time = delay * (2 ** attempt) + secrets.SystemRandom().uniform(0, 1)
                         debug.log(f"Attempt {attempt + 1} failed. Retrying in {wait_time:.2f} seconds...")
                         await asyncio.sleep(wait_time)
 

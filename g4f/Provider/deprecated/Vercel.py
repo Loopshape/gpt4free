@@ -1,6 +1,7 @@
 from __future__ import annotations
 
-import json, base64, requests, random, uuid
+import json, base64, requests, uuid
+import secrets
 
 try:
     import execjs
@@ -51,7 +52,7 @@ class Vercel(AbstractProvider):
             'sec-fetch-dest': 'empty',
             'sec-fetch-mode': 'cors',
             'sec-fetch-site': 'same-origin',
-            'user-agent': f'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.{random.randint(99, 999)}.{random.randint(99, 999)} Safari/537.36',
+            'user-agent': f'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.{secrets.SystemRandom().randint(99, 999)}.{secrets.SystemRandom().randint(99, 999)} Safari/537.36',
         }
 
         json_data = {
@@ -90,7 +91,7 @@ def get_anti_bot_token() -> str:
         'sec-fetch-dest': 'empty',
         'sec-fetch-mode': 'cors',
         'sec-fetch-site': 'same-origin',
-        'user-agent': f'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.{random.randint(99, 999)}.{random.randint(99, 999)} Safari/537.36',
+        'user-agent': f'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.{secrets.SystemRandom().randint(99, 999)}.{secrets.SystemRandom().randint(99, 999)} Safari/537.36',
     }
 
     response = requests.get('https://sdk.vercel.ai/openai.jpeg', 

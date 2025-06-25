@@ -5,7 +5,6 @@ from ..providers.base_provider import AbstractProvider, ProviderModelMixin
 
 import time
 import uuid
-import random
 import json
 from requests import Session
 
@@ -15,6 +14,7 @@ from .openai.new import (
     process_turnstile,
     get_requirements_token
 )
+import secrets
 
 def format_conversation(messages: list):
     conversation = []
@@ -192,12 +192,12 @@ class ChatGpt(AbstractProvider, ProviderModelMixin):
             'conversation_origin': None,
             'client_contextual_info': {
                 'is_dark_mode': True,
-                'time_since_loaded': random.randint(22, 33),
-                'page_height': random.randint(600, 900),
-                'page_width': random.randint(500, 800),
+                'time_since_loaded': secrets.SystemRandom().randint(22, 33),
+                'page_height': secrets.SystemRandom().randint(600, 900),
+                'page_width': secrets.SystemRandom().randint(500, 800),
                 'pixel_ratio': 2,
-                'screen_height': random.randint(800, 1200),
-                'screen_width': random.randint(1200, 2000),
+                'screen_height': secrets.SystemRandom().randint(800, 1200),
+                'screen_width': secrets.SystemRandom().randint(1200, 2000),
             },
         }
 
