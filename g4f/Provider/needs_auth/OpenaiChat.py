@@ -6,9 +6,9 @@ import uuid
 import json
 import base64
 import time
-import requests
 import random
 from copy import copy
+from security import safe_requests
 
 try:
     import nodriver
@@ -107,7 +107,7 @@ class OpenaiChat(AsyncGeneratorProvider, ProviderModelMixin):
     def get_models(cls):
         if not cls.models:
             try:
-                response = requests.get(f"{cls.url}/backend-anon/models")
+                response = safe_requests.get(f"{cls.url}/backend-anon/models")
                 response.raise_for_status()
                 data = response.json()
                 cls.models = [model.get("slug") for model in data.get("models")]
