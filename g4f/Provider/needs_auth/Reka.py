@@ -77,7 +77,7 @@ class Reka(AbstractProvider):
         tokens = ''
 
         response = requests.post('https://chat.reka.ai/api/chat', 
-                                cookies=cls.cookies, headers=headers, json=json_data, proxies=cls.proxy, stream=True)
+                                cookies=cls.cookies, headers=headers, json=json_data, proxies=cls.proxy, stream=True, timeout=60)
 
         for completion in response.iter_lines():
             if b'data' in completion:
@@ -117,7 +117,7 @@ class Reka(AbstractProvider):
         data += f'\r\n--{boundary}--\r\n'
 
         response = requests.post('https://chat.reka.ai/api/upload-image', 
-                                    cookies=cls.cookies, headers=headers, proxies=cls.proxy, data=data.encode('latin-1'))
+                                    cookies=cls.cookies, headers=headers, proxies=cls.proxy, data=data.encode('latin-1'), timeout=60)
 
         return response.json()['media_url']
 
@@ -140,7 +140,7 @@ class Reka(AbstractProvider):
 
         try:
             response = requests.get('https://chat.reka.ai/bff/auth/access_token', 
-                                    cookies=cls.cookies, headers=headers, proxies=cls.proxy)
+                                    cookies=cls.cookies, headers=headers, proxies=cls.proxy, timeout=60)
 
             return response.json()['accessToken']
 

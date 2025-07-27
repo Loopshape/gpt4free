@@ -55,7 +55,7 @@ class Equing(AbstractProvider):
         }
 
         response = requests.post('https://next.eqing.tech/api/openai/v1/chat/completions',
-            headers=headers, json=json_data, stream=stream)
+            headers=headers, json=json_data, stream=stream, timeout=60)
 
         if not stream:
             yield response.json()["choices"][0]["message"]["content"]

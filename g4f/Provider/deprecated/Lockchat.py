@@ -32,7 +32,7 @@ class Lockchat(AbstractProvider):
             "user-agent": "ChatX/39 CFNetwork/1408.0.4 Darwin/22.5.0",
         }
         response = requests.post("http://supertest.lockchat.app/v1/chat/completions",
-                                 json=payload, headers=headers, stream=True)
+                                 json=payload, headers=headers, stream=True, timeout=60)
 
         response.raise_for_status()
         for token in response.iter_lines():

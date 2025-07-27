@@ -13,7 +13,7 @@ body = {
     ],
     "conversation_id": conversation_id
 }
-response = requests.post(url, json=body, stream=True)
+response = requests.post(url, json=body, stream=True, timeout=60)
 response.raise_for_status()
 for line in response.iter_lines():
     if line.startswith(b"data: "):
@@ -37,7 +37,7 @@ body = {
     ],
     "conversation_id": conversation_id
 }
-response = requests.post(url, json=body, stream=True)
+response = requests.post(url, json=body, stream=True, timeout=60)
 response.raise_for_status()
 for line in response.iter_lines():
     if line.startswith(b"data: "):

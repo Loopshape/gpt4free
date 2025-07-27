@@ -63,7 +63,7 @@ class Aivvm(AbstractProvider):
             "user-agent"        : "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36"
         }
 
-        response = requests.post("https://chat.aivvm.com/api/chat", headers=headers, data=data, stream=True)
+        response = requests.post("https://chat.aivvm.com/api/chat", headers=headers, data=data, stream=True, timeout=60)
         response.raise_for_status()
 
         for chunk in response.iter_content(chunk_size=4096):

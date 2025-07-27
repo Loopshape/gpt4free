@@ -7,7 +7,7 @@ import json
 from ..requests.raise_for_status import raise_for_status
 
 def load_models():
-    response = requests.get("https://gpt4all.io/models/models3.json")
+    response = requests.get("https://gpt4all.io/models/models3.json", timeout=60)
     raise_for_status(response)
     return format_models(response.json())
 
